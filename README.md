@@ -18,6 +18,20 @@ To run the app:
 bin/mars
 ```
 
+## Linting
+
+Linting is provided by [Rubocop](https://github.com/rubocop-hq/rubocop), mostly following its default style guide.  It can be run with:
+
+```
+bin/rubocop
+```
+
+Rubocop can fix many of its violations automatically, by running:
+
+```
+bin/rubocop -a
+```
+
 ## Tests
 
 Tests are written with [RSpec](https://rspec.info/), and can be run with:
