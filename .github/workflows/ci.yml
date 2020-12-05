@@ -1,0 +1,19 @@
+on: [push]
+
+name: CI
+
+jobs:
+  test:
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v2
+      - name: Read .ruby-version
+        run: echo "##[set-output name=RUBY_VERSION;]$(cat .ruby-version)"
+        id: ruby-version
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: "${{ steps.ruby-version.outputs.RUBY_VERSION }}"
+      - name: Install dependencies
+        run: bin/setup
+      - name: RSpec
+        run: bin/rspec
