@@ -1,5 +1,7 @@
-require "mission_to_mars/runner"
-require "mission_to_mars/version"
+# frozen_string_literal: true
+
+require 'mission_to_mars/runner'
+require 'mission_to_mars/version'
 
 module MissionToMars
   class Error < StandardError; end

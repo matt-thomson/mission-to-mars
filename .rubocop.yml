@@ -1,0 +1,9 @@
+require:
+  - rubocop-performance
+  - rubocop-rspec
+
+AllCops:
+  Exclude:
+    - bin/*
+  NewCops: enable
+  TargetRubyVersion: 2.6

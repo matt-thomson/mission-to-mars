@@ -15,5 +15,7 @@ jobs:
           ruby-version: "${{ steps.ruby-version.outputs.RUBY_VERSION }}"
       - name: Install dependencies
         run: bin/setup
+      - name: Rubocop
+        run: bin/rubocop
       - name: RSpec
         run: bin/rspec

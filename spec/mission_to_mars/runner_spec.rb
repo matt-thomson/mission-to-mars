@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe MissionToMars::Runner do
   subject(:runner) { described_class.new(output: output) }
 
