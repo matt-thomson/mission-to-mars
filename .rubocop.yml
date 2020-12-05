@@ -8,6 +8,10 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.6
 
+# This makes long method chains look neater when running through the auto-correct.
+Layout/DotPosition:
+  EnforcedStyle: trailing
+
 # RSpec has all of the tests for a class inside a single block, so these can legitimately get quite long.
 Metrics/BlockLength:
   Exclude:
