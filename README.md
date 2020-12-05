@@ -39,3 +39,9 @@ Tests are written with [RSpec](https://rspec.info/), and can be run with:
 ```
 bin/rspec
 ```
+
+## Issues
+
+This section documents known issues with this application that should be addressed at some point.
+
+- All inputs are assumed to be valid.  No testing has been done with invalid inputs.  It's likely that an invalid input would lead to an error message, but not necessarily a helpful one.
