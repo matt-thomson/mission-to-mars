@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'instruction'
 require_relative 'planet'
 require_relative 'robot'
 
@@ -16,10 +17,22 @@ module MissionToMars
         planet = Planet.parse(file.each_line.first)
         @output.puts "width: #{planet.width}, height: #{planet.height}"
 
-        file.each_line.each_slice(2) do |robot_line, __instructions_line|
+        file.each_line.each_slice(2) do |robot_line, instructions_line|
           robot = Robot.parse(robot_line)
-          @output.puts "robot at (#{robot.x}, #{robot.y}) facing #{robot.direction.key}"
+          instructions = instructions_line.strip.chars.map { |instruction| Instruction.find_by_value(instruction) }
+
+          deploy_robot(robot, instructions)
         end
+      end
+    end
+
+    private
+
+    def deploy_robot(robot, instructions)
+      @output.puts "robot at (#{robot.x}, #{robot.y}) facing #{robot.direction.key}"
+
+      instructions.each do |instruction|
+        @output.puts "instruction: #{instruction.key}"
       end
     end
   end

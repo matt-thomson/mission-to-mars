@@ -13,6 +13,14 @@ RSpec.describe MissionToMars::Runner do
       <<~OUTPUT
         width: 5, height: 3
         robot at (1, 1) facing EAST
+        instruction: TURN_RIGHT
+        instruction: MOVE_FORWARD
+        instruction: TURN_RIGHT
+        instruction: MOVE_FORWARD
+        instruction: TURN_RIGHT
+        instruction: MOVE_FORWARD
+        instruction: TURN_RIGHT
+        instruction: MOVE_FORWARD
       OUTPUT
     end
 
