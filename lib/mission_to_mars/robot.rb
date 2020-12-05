@@ -27,5 +27,9 @@ module MissionToMars
       @direction = instruction.next_direction(@direction)
       @x, @y = instruction.next_position(@x, @y, @direction)
     end
+
+    def to_s
+      "#{@x} #{@y} #{@direction.value}"
+    end
   end
 end
