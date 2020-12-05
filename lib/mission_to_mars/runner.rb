@@ -20,6 +20,7 @@ module MissionToMars
           robot = Robot.parse(robot_line)
           instructions = instructions_line.strip.chars.map { |instruction| Instruction.find_by_value(instruction) }
 
+          planet.deploy_robot!(robot, instructions)
           @output.puts(robot)
         end
       end
