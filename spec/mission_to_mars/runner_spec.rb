@@ -9,10 +9,17 @@ RSpec.describe MissionToMars::Runner do
   describe '#run' do
     subject(:run) { runner.run }
 
-    it "outputs 'hello, world'" do
+    let(:expected_output) do
+      <<~OUTPUT
+        width: 5, height: 3
+        robot at (1, 1) facing EAST
+      OUTPUT
+    end
+
+    it 'outputs a formatted version of the input' do
       run
 
-      expect(output.string).to eq("width: 5, height: 3\n")
+      expect(output.string).to eq(expected_output)
     end
   end
 end
