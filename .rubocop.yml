@@ -8,6 +8,11 @@ AllCops:
   NewCops: enable
   TargetRubyVersion: 2.6
 
+# RSpec has all of the tests for a class inside a single block, so these can legitimately get quite long.
+Metrics/BlockLength:
+  Exclude:
+    - spec/**/*_spec.rb
+
 # x and y are descriptive enough variable names in the context of positions on a grid.
 Naming/MethodParameterName:
   AllowedNames:
