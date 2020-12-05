@@ -15,7 +15,7 @@ Once you have those installed, run `bin/setup` within the repository to install 
 To run the app:
 
 ```
-bin/mars
+bin/mars <path to input file>
 ```
 
 ## Linting
