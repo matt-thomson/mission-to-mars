@@ -27,5 +27,14 @@ module MissionToMars
       when WEST then NORTH
       end
     end
+
+    def move(x, y)
+      case self
+      when NORTH then [x, y + 1]
+      when EAST then [x + 1, y]
+      when SOUTH then [x, y - 1]
+      when WEST then [x - 1, y]
+      end
+    end
   end
 end

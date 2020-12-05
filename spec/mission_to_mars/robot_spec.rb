@@ -45,5 +45,17 @@ RSpec.describe MissionToMars::Robot do
         expect { step }.to change(robot, :direction).to(MissionToMars::CompassPoint::EAST)
       end
     end
+
+    context 'with a move forward instruction' do
+      let(:instruction) { MissionToMars::Instruction::MOVE_FORWARD }
+
+      it 'moves one step in the specified direction' do
+        expect { step }.to change { [robot.x, robot.y] }.to([3, 3])
+      end
+
+      it 'does not change the direction' do
+        expect { step }.not_to change(robot, :direction)
+      end
+    end
   end
 end

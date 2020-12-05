@@ -25,6 +25,7 @@ module MissionToMars
 
     def step!(instruction)
       @direction = instruction.next_direction(@direction)
+      @x, @y = instruction.next_position(@x, @y, @direction)
     end
   end
 end
