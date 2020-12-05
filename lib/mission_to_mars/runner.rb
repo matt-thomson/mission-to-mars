@@ -1,7 +1,11 @@
 module MissionToMars
   class Runner
+    def initialize(output: $stdout)
+      @output = output
+    end
+
     def run
-      puts 'hello, world'
+      @output.puts 'hello, world'
     end
   end
 end
