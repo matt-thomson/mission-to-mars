@@ -14,5 +14,9 @@ module MissionToMars
     end
 
     attr_reader :width, :height
+
+    def deploy_robot!(robot, instructions)
+      instructions.each { |instruction| robot.step!(instruction) }
+    end
   end
 end

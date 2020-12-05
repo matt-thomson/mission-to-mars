@@ -11,20 +11,12 @@ RSpec.describe MissionToMars::Runner do
 
     let(:expected_output) do
       <<~OUTPUT
-        width: 5, height: 3
-        robot at (1, 1) facing EAST
-        instruction: TURN_RIGHT
-        instruction: MOVE_FORWARD
-        instruction: TURN_RIGHT
-        instruction: MOVE_FORWARD
-        instruction: TURN_RIGHT
-        instruction: MOVE_FORWARD
-        instruction: TURN_RIGHT
-        instruction: MOVE_FORWARD
+        1 1 E
+        3 3 N
       OUTPUT
     end
 
-    it 'outputs a formatted version of the input' do
+    it 'outputs the result of the robots following the instructions' do
       run
 
       expect(output.string).to eq(expected_output)
