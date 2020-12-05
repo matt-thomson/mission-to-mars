@@ -22,5 +22,9 @@ module MissionToMars
     end
 
     attr_reader :x, :y, :direction
+
+    def step!(instruction)
+      @direction = instruction.next_direction(@direction)
+    end
   end
 end

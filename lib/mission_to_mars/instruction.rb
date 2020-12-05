@@ -8,5 +8,12 @@ module MissionToMars
     new :MOVE_FORWARD, 'F'
     new :TURN_LEFT, 'L'
     new :TURN_RIGHT, 'R'
+
+    def next_direction(direction)
+      case self
+      when TURN_LEFT then direction.anticlockwise
+      when TURN_RIGHT then direction.clockwise
+      end
+    end
   end
 end
