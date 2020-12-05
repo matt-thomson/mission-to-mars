@@ -1,0 +1,6 @@
+#!/usr/bin/env ruby
+
+require 'mission_to_mars'
+
+runner = MissionToMars::Runner.new
+runner.run
