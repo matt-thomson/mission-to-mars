@@ -1,5 +1,7 @@
 # Mission To Mars
 
+![CI status](https://github.com/matt-thomson/mission-to-mars/workflows/CI/badge.svg)
+
 Program to track robots travelling around Mars.
 
 ## Prerequisites
