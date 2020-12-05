@@ -1,3 +1,4 @@
+require "mission_to_mars/runner"
 require "mission_to_mars/version"
 
 module MissionToMars
