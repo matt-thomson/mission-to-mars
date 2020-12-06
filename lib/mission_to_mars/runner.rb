@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require_relative 'deployment'
 require_relative 'instruction'
 require_relative 'planet'
 require_relative 'robot'
@@ -17,13 +18,19 @@ module MissionToMars
         planet = Planet.parse(file.each_line.first)
 
         file.each_line.each_slice(2) do |robot_line, instructions_line|
-          robot = Robot.parse(robot_line)
-          instructions = instructions_line.strip.chars.map { |instruction| Instruction.find_by_value(instruction) }
-
-          planet.deploy_robot!(robot, instructions)
-          @output.puts(robot)
+          deploy(planet, robot_line, instructions_line)
         end
       end
+    end
+
+    def deploy(planet, robot_line, instructions_line)
+      robot = Robot.parse(robot_line)
+      instructions = instructions_line.strip.chars.map { |instruction| Instruction.find_by_value(instruction) }
+
+      deployment = Deployment.new(robot, planet, instructions)
+      deployment.run!
+
+      @output.puts(deployment)
     end
   end
 end

@@ -2,7 +2,6 @@
 
 require 'mission_to_mars/compass_point'
 require 'mission_to_mars/instruction'
-require 'mission_to_mars/planet'
 require 'mission_to_mars/robot'
 
 RSpec.describe MissionToMars::Robot do
@@ -18,27 +17,23 @@ RSpec.describe MissionToMars::Robot do
     end
   end
 
-  describe '#step!' do
-    subject(:step) { robot.step!(instruction, planet) }
+  describe '#step' do
+    subject(:step) { robot.step(instruction) }
 
     let(:robot) { described_class.new(x, y, MissionToMars::CompassPoint::NORTH) }
     let(:x) { 3 }
     let(:y) { 2 }
-    let(:planet) { MissionToMars::Planet.new(5, 3) }
 
     context 'with a turn left instruction' do
       let(:instruction) { MissionToMars::Instruction::TURN_LEFT }
 
       it 'does not change the position' do
-        expect { step }.not_to(change { [robot.x, robot.y] })
+        expect(step.x).to eq(x)
+        expect(step.y).to eq(y)
       end
 
       it 'moves the direction one step anti-clockwise' do
-        expect { step }.to change(robot, :direction).to(MissionToMars::CompassPoint::WEST)
-      end
-
-      it 'does not mark the robot as lost' do
-        expect { step }.not_to change(robot, :lost?)
+        expect(step.direction).to eq(MissionToMars::CompassPoint::WEST)
       end
     end
 
@@ -46,15 +41,12 @@ RSpec.describe MissionToMars::Robot do
       let(:instruction) { MissionToMars::Instruction::TURN_RIGHT }
 
       it 'does not change the position' do
-        expect { step }.not_to(change { [robot.x, robot.y] })
+        expect(step.x).to eq(x)
+        expect(step.y).to eq(y)
       end
 
       it 'moves the direction one step clockwise' do
-        expect { step }.to change(robot, :direction).to(MissionToMars::CompassPoint::EAST)
-      end
-
-      it 'does not mark the robot as lost' do
-        expect { step }.not_to change(robot, :lost?)
+        expect(step.direction).to eq(MissionToMars::CompassPoint::EAST)
       end
     end
 
@@ -62,32 +54,12 @@ RSpec.describe MissionToMars::Robot do
       let(:instruction) { MissionToMars::Instruction::MOVE_FORWARD }
 
       it 'moves one step in the specified direction' do
-        expect { step }.to change { [robot.x, robot.y] }.to([3, 3])
+        expect(step.x).to eq(3)
+        expect(step.y).to eq(3)
       end
 
       it 'does not change the direction' do
-        expect { step }.not_to change(robot, :direction)
-      end
-
-      it 'does not mark the robot as lost' do
-        expect { step }.not_to change(robot, :lost?)
-      end
-    end
-
-    context 'with an instruction to move off the grid' do
-      let(:instruction) { MissionToMars::Instruction::MOVE_FORWARD }
-      let(:y) { 3 }
-
-      it 'does not change the position' do
-        expect { step }.not_to(change { [robot.x, robot.y] })
-      end
-
-      it 'does not change the direction' do
-        expect { step }.not_to change(robot, :direction)
-      end
-
-      it 'marks the robot as lost' do
-        expect { step }.to change(robot, :lost?).to(true)
+        expect(step.direction).to eq(MissionToMars::CompassPoint::NORTH)
       end
     end
   end

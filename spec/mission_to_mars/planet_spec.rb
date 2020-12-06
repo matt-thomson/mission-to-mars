@@ -17,45 +17,6 @@ RSpec.describe MissionToMars::Planet do
     end
   end
 
-  describe '#deploy_robot!' do
-    subject(:deploy_robot) { planet.deploy_robot!(robot, instructions) }
-
-    let(:planet) { described_class.new(10, 10) }
-    let(:robot) { MissionToMars::Robot.new(1, 2, MissionToMars::CompassPoint::NORTH) }
-    let(:instructions) do
-      [
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::TURN_RIGHT,
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::TURN_LEFT,
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::MOVE_FORWARD,
-        MissionToMars::Instruction::TURN_LEFT,
-        MissionToMars::Instruction::MOVE_FORWARD
-      ]
-    end
-
-    it 'follows the path' do
-      expect { deploy_robot }.
-        to change(robot, :x).to(3).
-        and change(robot, :y).to(8).
-        and change(robot, :direction).to(MissionToMars::CompassPoint::WEST)
-    end
-
-    context 'with instructions that go off the grid' do
-      let(:instructions) { [MissionToMars::Instruction::MOVE_FORWARD] * 20 }
-
-      it 'stops at the edge of the grid' do
-        expect { deploy_robot }.to change(robot, :y).to(10)
-      end
-    end
-  end
-
   describe '#on_grid?' do
     subject(:on_grid) { planet.on_grid?(x, y) }
 
