@@ -13,7 +13,7 @@ module MissionToMars
       @instructions.each do |instruction|
         break if @robot.lost?
 
-        @robot.step!(instruction, @planet)
+        @robot = @robot.step(instruction, @planet)
       end
     end
 
