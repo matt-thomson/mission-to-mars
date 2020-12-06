@@ -5,11 +5,10 @@ require_relative 'compass_point'
 module MissionToMars
   # Robot represents a robot on the surface of Mars.
   class Robot
-    def initialize(x, y, direction, lost: false)
+    def initialize(x, y, direction)
       @x = x
       @y = y
       @direction = direction
-      @lost = lost
     end
 
     def self.parse(input)
@@ -24,26 +23,15 @@ module MissionToMars
 
     attr_reader :x, :y, :direction
 
-    def step(instruction, planet)
+    def step(instruction)
       next_x, next_y = instruction.next_position(@x, @y, @direction)
+      next_direction = instruction.next_direction(@direction)
 
-      if planet.on_grid?(next_x, next_y)
-        direction = instruction.next_direction(@direction)
-        Robot.new(next_x, next_y, direction)
-      else
-        Robot.new(@x, @y, @direction, lost: true)
-      end
-    end
-
-    def lost?
-      @lost
+      Robot.new(next_x, next_y, next_direction)
     end
 
     def to_s
-      result = "#{@x} #{@y} #{@direction.value}"
-      result += ' LOST' if lost?
-
-      result
+      "#{@x} #{@y} #{@direction.value}"
     end
   end
 end

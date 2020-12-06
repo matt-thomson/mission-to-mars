@@ -30,7 +30,7 @@ module MissionToMars
       deployment = Deployment.new(robot, planet, instructions)
       deployment.run!
 
-      @output.puts(deployment.robot)
+      @output.puts(deployment)
     end
   end
 end
