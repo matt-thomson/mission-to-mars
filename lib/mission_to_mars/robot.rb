@@ -9,6 +9,7 @@ module MissionToMars
       @x = x
       @y = y
       @direction = direction
+      @lost = false
     end
 
     def self.parse(input)
@@ -23,13 +24,27 @@ module MissionToMars
 
     attr_reader :x, :y, :direction
 
-    def step!(instruction)
-      @x, @y = instruction.next_position(@x, @y, @direction)
-      @direction = instruction.next_direction(@direction)
+    def step!(instruction, planet)
+      next_x, next_y = instruction.next_position(@x, @y, @direction)
+
+      if planet.on_grid?(next_x, next_y)
+        @x = next_x
+        @y = next_y
+        @direction = instruction.next_direction(@direction)
+      else
+        @lost = true
+      end
+    end
+
+    def lost?
+      @lost
     end
 
     def to_s
-      "#{@x} #{@y} #{@direction.value}"
+      result = "#{@x} #{@y} #{@direction.value}"
+      result += ' LOST' if lost?
+
+      result
     end
   end
 end

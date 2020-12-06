@@ -46,5 +46,75 @@ RSpec.describe MissionToMars::Planet do
         and change(robot, :y).to(8).
         and change(robot, :direction).to(MissionToMars::CompassPoint::WEST)
     end
+
+    context 'with instructions that go off the grid' do
+      let(:instructions) { [MissionToMars::Instruction::MOVE_FORWARD] * 20 }
+
+      it 'stops at the edge of the grid' do
+        expect { deploy_robot }.to change(robot, :y).to(10)
+      end
+    end
+  end
+
+  describe '#on_grid?' do
+    subject(:on_grid) { planet.on_grid?(x, y) }
+
+    let(:planet) { described_class.new(5, 3) }
+
+    context 'with the bottom left corner' do
+      let(:x) { 0 }
+      let(:y) { 0 }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'with the top left corner' do
+      let(:x) { 0 }
+      let(:y) { 3 }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'with the top right corner' do
+      let(:x) { 5 }
+      let(:y) { 3 }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'with the bottom right corner' do
+      let(:x) { 5 }
+      let(:y) { 0 }
+
+      it { is_expected.to eq(true) }
+    end
+
+    context 'when off the left edge' do
+      let(:x) { -1 }
+      let(:y) { 0 }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'when off the right edge' do
+      let(:x) { 6 }
+      let(:y) { 0 }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'when off the top edge' do
+      let(:x) { 0 }
+      let(:y) { 4 }
+
+      it { is_expected.to eq(false) }
+    end
+
+    context 'when off the bottom edge' do
+      let(:x) { 0 }
+      let(:y) { -1 }
+
+      it { is_expected.to eq(false) }
+    end
   end
 end
