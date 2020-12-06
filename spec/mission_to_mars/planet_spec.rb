@@ -46,6 +46,14 @@ RSpec.describe MissionToMars::Planet do
         and change(robot, :y).to(8).
         and change(robot, :direction).to(MissionToMars::CompassPoint::WEST)
     end
+
+    context 'with instructions that go off the grid' do
+      let(:instructions) { [MissionToMars::Instruction::MOVE_FORWARD] * 20 }
+
+      it 'stops at the edge of the grid' do
+        expect { deploy_robot }.to change(robot, :y).to(10)
+      end
+    end
   end
 
   describe '#on_grid?' do
