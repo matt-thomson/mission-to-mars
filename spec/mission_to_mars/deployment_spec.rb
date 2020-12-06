@@ -49,6 +49,22 @@ RSpec.describe MissionToMars::Deployment do
       it 'leaves a scent at the last position' do
         expect { run! }.to change { planet.scent?(1, 10) }.to(true)
       end
+
+      it 'marks the robot as lost' do
+        expect { run! }.to change(deployment, :lost?).to(true)
+      end
+
+      context 'when there is already a scent at the last location' do
+        before { planet.leave_scent(1, 10) }
+
+        it 'stops at the edge of the grid' do
+          expect { run! }.to change { deployment.robot.y }.to(10)
+        end
+
+        it 'does not mark the robot as lost' do
+          expect { run! }.not_to change(deployment, :lost?)
+        end
+      end
     end
   end
 end
