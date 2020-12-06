@@ -12,7 +12,7 @@ RSpec.describe MissionToMars::Runner do
     let(:expected_output) do
       <<~OUTPUT
         1 1 E
-        3 3 N
+        3 3 N LOST
       OUTPUT
     end
 

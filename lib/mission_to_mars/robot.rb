@@ -41,7 +41,10 @@ module MissionToMars
     end
 
     def to_s
-      "#{@x} #{@y} #{@direction.value}"
+      result = "#{@x} #{@y} #{@direction.value}"
+      result += ' LOST' if lost?
+
+      result
     end
   end
 end
