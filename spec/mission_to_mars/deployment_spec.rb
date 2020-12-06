@@ -45,6 +45,10 @@ RSpec.describe MissionToMars::Deployment do
       it 'stops at the edge of the grid' do
         expect { run! }.to change { deployment.robot.y }.to(10)
       end
+
+      it 'leaves a scent at the last position' do
+        expect { run! }.to change { planet.scent?(1, 10) }.to(true)
+      end
     end
   end
 end

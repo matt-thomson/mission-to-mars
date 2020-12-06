@@ -18,6 +18,7 @@ module MissionToMars
           @robot = next_robot
         else
           @lost = true
+          @planet.leave_scent(@robot.x, @robot.y)
           break
         end
       end
