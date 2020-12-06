@@ -40,10 +40,42 @@ RSpec.describe MissionToMars::Deployment do
     end
 
     context 'with instructions that go off the grid' do
-      let(:instructions) { [MissionToMars::Instruction::MOVE_FORWARD] * 20 }
+      let(:instructions) do
+        [
+          *[MissionToMars::Instruction::MOVE_FORWARD] * 20,
+          MissionToMars::Instruction::TURN_RIGHT,
+          MissionToMars::Instruction::MOVE_FORWARD
+        ]
+      end
 
       it 'stops at the edge of the grid' do
         expect { run! }.to change { deployment.robot.y }.to(10)
+      end
+
+      it 'does not follow instructions after getting lost' do
+        expect { run! }.not_to(change { deployment.robot.x })
+      end
+
+      it 'leaves a scent at the last position' do
+        expect { run! }.to change { planet.scent?(1, 10) }.to(true)
+      end
+
+      it 'marks the robot as lost' do
+        expect { run! }.to change(deployment, :lost?).to(true)
+      end
+
+      context 'when there is already a scent at the last location' do
+        before { planet.leave_scent(1, 10) }
+
+        it 'follows instructions after finding the scent' do
+          expect { run! }.
+            to change { deployment.robot.x }.to(2).
+            and change { deployment.robot.y }.to(10)
+        end
+
+        it 'does not mark the robot as lost' do
+          expect { run! }.not_to change(deployment, :lost?)
+        end
       end
     end
   end

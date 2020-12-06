@@ -16,14 +16,19 @@ module MissionToMars
 
         if @planet.on_grid?(next_robot.x, next_robot.y)
           @robot = next_robot
-        else
+        elsif !@planet.scent?(@robot.x, @robot.y)
           @lost = true
+          @planet.leave_scent(@robot.x, @robot.y)
           break
         end
       end
     end
 
     attr_reader :robot
+
+    def lost?
+      @lost
+    end
 
     def to_s
       result = robot.to_s

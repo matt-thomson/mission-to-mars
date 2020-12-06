@@ -26,3 +26,7 @@ Naming/MethodParameterName:
 # Allow grouping a few related expectations together into a single example.
 RSpec/MultipleExpectations:
   Max: 3
+
+# An extra level of nesting allows better reuse between specs.
+RSpec/NestedGroups:
+  Max: 4
