@@ -16,7 +16,7 @@ module MissionToMars
     attr_reader :width, :height
 
     def deploy_robot!(robot, instructions)
-      instructions.each { |instruction| robot.step!(instruction) }
+      instructions.each { |instruction| robot.step!(instruction, self) }
     end
 
     def on_grid?(x, y)
