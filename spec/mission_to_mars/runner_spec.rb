@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 RSpec.describe MissionToMars::Runner do
-  subject(:runner) { described_class.new(path: path, output: output) }
+  subject(:runner) { described_class.new(input: input, output: output) }
 
-  let(:path) { 'spec/fixtures/example.txt' }
+  let(:input) { File.open('spec/fixtures/example.txt') }
   let(:output) { StringIO.new }
 
   describe '#run' do
