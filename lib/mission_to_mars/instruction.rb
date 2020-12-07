@@ -5,22 +5,33 @@ require 'typesafe_enum'
 module MissionToMars
   # Instruction represents a single instruction that a robot can follow.
   class Instruction < TypesafeEnum::Base
-    new :MOVE_FORWARD, 'F'
-    new :TURN_LEFT, 'L'
-    new :TURN_RIGHT, 'R'
+    new :MOVE_FORWARD, 'F' do
+      def next_direction(direction)
+        direction
+      end
 
-    def next_direction(direction)
-      case self
-      when MOVE_FORWARD then direction
-      when TURN_LEFT then direction.anticlockwise
-      when TURN_RIGHT then direction.clockwise
+      def next_position(x, y, direction)
+        direction.move(x, y)
       end
     end
 
-    def next_position(x, y, direction)
-      case self
-      when MOVE_FORWARD then direction.move(x, y)
-      when TURN_LEFT, TURN_RIGHT then [x, y]
+    new :TURN_LEFT, 'L' do
+      def next_direction(direction)
+        direction.anticlockwise
+      end
+
+      def next_position(x, y, _direction)
+        [x, y]
+      end
+    end
+
+    new :TURN_RIGHT, 'R' do
+      def next_direction(direction)
+        direction.clockwise
+      end
+
+      def next_position(x, y, _direction)
+        [x, y]
       end
     end
   end

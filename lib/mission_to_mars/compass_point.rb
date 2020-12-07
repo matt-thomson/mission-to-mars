@@ -5,36 +5,37 @@ require 'typesafe_enum'
 module MissionToMars
   # CompassPoint represents one of the four primary compass directions.
   class CompassPoint < TypesafeEnum::Base
-    new :NORTH, 'N'
-    new :EAST, 'E'
-    new :SOUTH, 'S'
-    new :WEST, 'W'
+    # These are in clockwise order.
+    new :NORTH, 'N' do
+      def move(x, y)
+        [x, y + 1]
+      end
+    end
+
+    new :EAST, 'E' do
+      def move(x, y)
+        [x + 1, y]
+      end
+    end
+
+    new :SOUTH, 'S' do
+      def move(x, y)
+        [x, y - 1]
+      end
+    end
+
+    new :WEST, 'W' do
+      def move(x, y)
+        [x - 1, y]
+      end
+    end
 
     def anticlockwise
-      case self
-      when NORTH then WEST
-      when EAST then NORTH
-      when SOUTH then EAST
-      when WEST then SOUTH
-      end
+      CompassPoint.find_by_ord((ord - 1) % 4)
     end
 
     def clockwise
-      case self
-      when NORTH then EAST
-      when EAST then SOUTH
-      when SOUTH then WEST
-      when WEST then NORTH
-      end
-    end
-
-    def move(x, y)
-      case self
-      when NORTH then [x, y + 1]
-      when EAST then [x + 1, y]
-      when SOUTH then [x, y - 1]
-      when WEST then [x - 1, y]
-      end
+      CompassPoint.find_by_ord((ord + 1) % 4)
     end
   end
 end
