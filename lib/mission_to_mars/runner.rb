@@ -8,20 +8,20 @@ require_relative 'robot'
 module MissionToMars
   # Entry point to the application.
   class Runner
-    def initialize(path:, output: $stdout)
-      @path = path
+    def initialize(input:, output: $stdout)
+      @input = input
       @output = output
     end
 
     def run
-      File.open(@path) do |file|
-        planet = Planet.parse(file.each_line.first)
+      planet = Planet.parse(input_lines.first)
 
-        file.each_line.map(&:strip).reject(&:empty?).each_slice(2) do |robot_line, instructions_line|
-          deploy(planet, robot_line, instructions_line)
-        end
+      input_lines.each_slice(2) do |robot_line, instructions_line|
+        deploy(planet, robot_line, instructions_line)
       end
     end
+
+    private
 
     def deploy(planet, robot_line, instructions_line)
       robot = Robot.parse(robot_line)
@@ -31,6 +31,10 @@ module MissionToMars
       deployment.run!
 
       @output.puts(deployment)
+    end
+
+    def input_lines
+      @input.each_line.lazy.map(&:strip).reject(&:empty?)
     end
   end
 end

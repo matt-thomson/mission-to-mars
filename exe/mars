@@ -3,10 +3,5 @@
 
 require 'mission_to_mars'
 
-if ARGV.empty?
-  puts 'usage: mars <input path>'
-  exit(1)
-end
-
-runner = MissionToMars::Runner.new(path: ARGV.fetch(0))
+runner = MissionToMars::Runner.new(input: ARGF)
 runner.run

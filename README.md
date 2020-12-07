@@ -18,6 +18,12 @@ To run the app:
 bin/mars <path to input file>
 ```
 
+Alternatively, the app can take input from standard input (stdin).  For example:
+
+```
+cat <path to input file> | bin/mars
+```
+
 ## Linting
 
 Linting is provided by [Rubocop](https://github.com/rubocop-hq/rubocop), mostly following its default style guide.  It can be run with:
